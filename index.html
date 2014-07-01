@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+body{
+	background-image: url(img/bgi.jpg);
+	font-family: Microsoft YaHei;
+}
+
+.covorname{
+	position: absolute;
+	color: white;
+}
+
+#chn{
+	font-family: FZMiaoWuS-GB;
+	left: 62%;
+	top: 6%;
+	font-size: 66px;
+}
+
+#eng{
+	font-family: FZMiaoWuS-GB;
+	left: 63.2%;
+	top: 25%;
+	font-size: 26px;
+}
+
+#sub{
+	font-family: sentyTEA-basic;
+	left: 78%;
+	top: 30%;
+	font-size: 29px;
+}
+
+div.header{
+	background-image: url(img/cover2.jpg);
+	height: 630px;
+	margin-bottom: 10px;
+	box-shadow: 0px 0px 5px 5px #AAAAAA;
+}
+
+div.frame{
+	margin:  0;
+	padding: 0;
+	min-height:690px;
+}
+
+div.body{
+	background-color: rgb(99, 99, 99);
+	margin-right: 290px;
+	border: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 20px;
+
+}
+
+div.aside{
+	width: 280px;
+	float: right;
+
+}
+
+.info{
+	height: 330px;
+	background-color: rgb(150,150,150);
+}
+
+.portrait{
+	background-color: rgb(99, 99, 99);
+	height: 135px;
+}
+
+#por1{
+	float: left;
+	width: 135px;
+	height: 135px;
+	margin-right: 10px;
+}
+
+ #por2{
+	float: left;
+	width: 135px;
+	height: 135px;
+}
+
+.contact{
+	padding: 10px;
+}
+.hwhead{
+	text-align: center;
+	margin:10px;
+	padding-top: 10px;
+}
+
+.hwline{
+	background-color:  rgb(150,150,150);
+}
+
+ul{
+	list-style-type: none;
+	list-style-position: inside;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 20px;
+}
+
+li{
+	margin-top:10px;
+}
+
+.body p{
+	margin: 5px;
+}
+
+.footer{
+	background-color: gray;
+	margin-top: 5px;
+	text-align: center;
+	height: 60px;
+	opacity: 0.7;
+}
+
+.left{
+	margin-right: 10px;
+	height: 60px;
+	float: right;
+}
+
+.right{
+	float: left;
+	height: 60px;
+}
+div.footer p{
+	float: left;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.icon{
+	height: 50px;
+	float: left;
+	margin: 5px;
+	margin-left: 10px;
+	margin-right:10px;
+	text-align: center;
+}
+
+.l1{
+	float: left;
+	width: 50%;
+}
+
+.r1{
+	float: left;
+	width: 50%;
+}
+
+.blog{
+	margin: 10px;
+	background-color: rgb(200,200,200);
+	padding: 10px;
+	padding-top: 5px;
+}
+
+</style>
+</head>
+
+<body>
+	<div class = "header">
+		
+		<!-- 下面部分字体不是系统自带，因此放在cover图片里 
+		<p class = "covorname" id = "chn">笑看沉浮人生</p>
+		<p class = "covorname" id = "eng">xiao 　kan　chen 　fu 　ren　 sheng</p>
+		<p class = "covorname" id = "sub">岳一飞的主页</p>
+		-->
+	</div>
+
+	<div class = "frame">
+		<div class = "aside">
+			<div class = "info">
+				<div class = "portrait">
+					<div id = "por1"><img src = "img/icon.jpg"></div>
+					<div id = "por2"><a href = "img/weixin.png"><img src = "img/weixin.jpg"></a></div>
+				</div>
+				<div class = "contact">
+					contact me:
+					<a href = "mailto:yueyf12@mails.tsinghua.edu.cn">yueyf12@mails.tsinghua.edu.cn<a>;
+					<a href = "mailto:yyf7743@sina.com">yyf7743@sina.com</a>;
+					<p>个人简介：</p>
+					<p>　　选择强迫拖延综合征</p>
+				</div>
+			</div>
+			<div class = "hwline">
+				<div class = "hwhead">
+				<p>Web前端技术作业展示区</p>
+				</div>
+				<div class = "hw">
+					<ul>
+						<a href = "http://news.sina.com.cn/c/2014-06-30/200730446002.shtml"><li>第一讲（Web前端概述&HTML/CSS基础）：个人主页设计</li></a>
+						<a href = "http://news.sina.com.cn/c/2014-06-30/181230445633.shtml"><li>第二讲（JavaScript基础）：基础练习&游戏练习</li></a>
+						<a href = "http://news.sina.com.cn/c/2014-06-30/180230445630.shtml"><li>第三讲（DOM、事件、调试、jQuery）：趣玩DOM</li></a>
+						<a href = "http://news.sina.com.cn/c/2014-06-30/181430445642.shtml"><li>第四讲（Ajax、WebSocket、HTML5&CSS3）:图片新闻轮播</li></a>
+						<a href = "http://news.sina.com.cn/c/2014-06-30/181830445665.shtml"><li>第五讲（NodeJS基础）：创意前端游戏</li></a>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class = "body">
+			<div class = "blog" id = "blog1">
+				<a href = "http://www.zhihu.com/question/22238159"><h3>我的第一篇日志</h3></a>
+
+			</div>
+			<div class = "blog" id = "blog2">
+				<a href = "http://www.zhihu.com/question/22238159"><h3>我的第二篇日志</h3></a>
+				<p>还没写呢。。。</p>
+			</div>
+			<div class = "blog" id = "blog_final">
+				<a href = "http://www.zhihu.com/question/22238159"><h3>你有什么相见恨晚的知识想推荐给年轻人？  ——来自知乎</h3></a>
+
+				<p>一直想回答这个题目，算是2013最后一答。</p>
+				<p>还是来谈谈成功学吧，虽然这并不是一个好的标签。</p>
+				<p>我的体会，一言以蔽之，就是“永远不要以为你可以扮演什么，只有做你自己，你才有可能成功。”</p>
+				</br>
+				<p>一个人，有一个人的基因，你是什么，你的个性，你的审美，你的世界观决定了你的人生轨迹。</p>
+				<p>无论如何，你没有办法摆脱你的这些属性。</p>
+				<p>很多年轻人，其实也包括我自己，总是在20来岁的时候刻意求变，总是要想办法去适应所谓的主流社会，成年人社会。包括改变自己的说话方式，改变自己的思维模式，其目的只有一个，就是修正自己，适应社会的那一整套规则。<p>
+				<p>……</p>
+				</br>
+			</div>
+		</div>
+	</div>
+
+	<div class = "footer">
+		<div class = "l1">
+			<div class = "left">
+				<p>合作伙伴:</p>
+				<div class = "icon">
+					<a href = "http://www.baidu.com">
+					<img src = "img/baidu.jpg">
+					</a>
+				</div>
+				<div class = "icon">
+					<a href = "https://www.google.com.hk/">
+					<img src = "img/google.png">
+					</a>
+				</div>
+				<div class = "icon">
+					<a href = "http://www.wikipedia.org/">
+					<img src = "img/wiki.png">
+					</a>
+				</div>
+				<div class = "icon">
+					<a href = "http://www.w3school.com.cn/">
+					<img src = "img/w3school.png">
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class = "r1">
+			<div class = "right">
+				<p>友情链接:</p>
+				<div class = "icon">
+					<a href = "http://lib.tsinghua.edu.cn/dra/">
+					<img src = "img/lib.png">
+					</a>
+				</div>
+				<div class = "icon">
+					<a href = "http://learn.cic.tsinghua.edu.cn/index">
+					<img src = "img/weblearning.png">
+					</a>
+				</div>
+				<div class = "icon">
+					<a href = "http://student.tsinghua.edu.cn/index.do">
+					<img src = "img/stuTH.png">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
