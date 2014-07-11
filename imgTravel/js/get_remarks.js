@@ -110,24 +110,36 @@ $(function(){
 
 		//设置cover封面，隐藏滚动条
 		$("body").eq(0).css("overflow","hidden");
-		$(".cover").css({"height": $(window).height(), "width": $(window).width(), "top": $("body")[0].scrollTop, "margin": 0}).attr({"src": "images/cover.jpg", "title": "点击进入新闻", "alt": "2010年3月，阿富汗库纳尔省，在 Tsunek 村遭遇塔利班伏击后，阿富汗士兵将一名受伤的战友运上美国医疗直升机。"}).click(function(){
+		$(".cover").css({"height": $(window).height(), "width": $(window).width(), "top": document.body.scrollTop, "margin": 0}).click(function(){
 			$(".cover").fadeTo(500, 0, function(){
 				$(".cover").css("z-index", -1);
 				$("body").eq(0).css("overflow-y","visible");
 			});
 		})
+/*
+function scrollFunc() { 
+var div = document.getElementById("tt"); 
+div.style.top = document.body.scrollTop; 
+} 
+
+if(document.addEventListener){
+    document.addEventListener('DOMMouseScroll',scrollFunc,false);
+}//W3C
+window.onmousewheel=document.onmousewheel = window.onscroll; 
+window.onscroll(); 
+	*/
 
 	//显示cover封面照片时禁止鼠标滚轮事件响应
 	function disableMouseWheel(){
 		if(document.addEventListner){
 			document.addEventListner('DOMMouseScroll',scrollFunc, false);
 		}
-		window.onmousewheel = scrollFunc;
-		document.onmousewheel = scrollFunc;
+		window.onmousewheel = document.onmousewheel = scrollFunc;
 	}
 	function scrollFunc(evt){
 		return true;
 	}
 	window.onload = disableMouseWheel;
+
 
 })
