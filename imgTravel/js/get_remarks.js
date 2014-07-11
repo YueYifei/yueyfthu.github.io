@@ -1,7 +1,7 @@
 
 $(function(){	
-
-	//localStorage本地存储当前评论页数及退出时评论页数
+	debugger;
+	//localStorage本地存储当前评论页数及当前屏幕在页面中的位置
 	if(localStorage.currentPage){
 		//localStorage.currentPage = 1;
 		currentPage = localStorage.currentPage - 0;//将string转化为number
@@ -10,7 +10,15 @@ $(function(){
 		currentPage = 1;
 		localStorage.currentPage = 1;
 	}
-	
+	if(sessionStorage.currentHeight){
+		//currentHeight = 1200;
+		currentHeight = sessionStorage.currentHeight - 0;
+	}
+	else{
+		currentHeight = 0;
+		sessionStorage.currentHeight = 0;
+	}
+
 	var totalPage;
 	function processData(data) {
 		//添加总数
@@ -107,27 +115,19 @@ $(function(){
 		localStorage.currentPage = currentPage;
 	})
 
+	//设置cover封面，隐藏滚动条
+	$("body").eq(0).css("overflow","hidden");
+	$(".cover").css({"height": $(window).height(), "width": $(window).width(), "top": currentHeight, "margin": 0}).click(function(){
+		$(".cover").fadeTo(500, 0, function(){
+			$(".cover").css("z-index", -1);
+			$("body").eq(0).css("overflow-y","visible");
+		});
+	})
 
-		//设置cover封面，隐藏滚动条
-		$("body").eq(0).css("overflow","hidden");
-		$(".cover").css({"height": $(window).height(), "width": $(window).width(), "top": document.body.scrollTop, "margin": 0}).click(function(){
-			$(".cover").fadeTo(500, 0, function(){
-				$(".cover").css("z-index", -1);
-				$("body").eq(0).css("overflow-y","visible");
-			});
-		})
-/*
-function scrollFunc() { 
-var div = document.getElementById("tt"); 
-div.style.top = document.body.scrollTop; 
-} 
-
-if(document.addEventListener){
-    document.addEventListener('DOMMouseScroll',scrollFunc,false);
-}//W3C
-window.onmousewheel=document.onmousewheel = window.onscroll; 
-window.onscroll(); 
-	*/
+	//记录当前时刻屏幕在页面中的位置，更新周期为100ms
+	setInterval(function() {
+		sessionStorage.currentHeight = $(window).scrollTop();
+	},100); 
 
 	//显示cover封面照片时禁止鼠标滚轮事件响应
 	function disableMouseWheel(){
@@ -140,6 +140,5 @@ window.onscroll();
 		return true;
 	}
 	window.onload = disableMouseWheel;
-
 
 })
