@@ -40,15 +40,15 @@ function draw(num_hori, num_vert, map){//水平格子数，竖直格子数，位
 
 function draw_window(){
 	$(".toolbar_right img, .toolbar_right div").css({"width": $(".toolbar_right").width()});
-	$(".toolbar_right span").css({"height": $(".toolbar_right img").height()/2, "width": $(".toolbar_right").width()/3, "top": $(".headbar").height()+$(".horibar").height()+$(".toolbar_right img").height()/2});
-	$(".toolbar_right span:eq(1)").css({"top": $(".headbar").height()+$(".horibar").height()+$(".toolbar_right img").height()*3/2});
+	$(".toolbar_right span").css({"height": $(".toolbar_right img").height()/2, "width": $(".toolbar_right").width()/3, "top": $(".headbar").height()+$(".horibar").height()+150/2});
+	$(".toolbar_right span:eq(1)").css({"top": $(".headbar").height()+$(".horibar").height()+150*3/2});
 	$(".game_bott").css({"width": $(window).width()});//设置该宽度要在其他设置值之前
 	$(".welcome, .welcomebg").css({"height": $(window).height(), "width": $(window).width()});
 	$(".headbar img").css({"overflow": "hidden", "position": "absolute", "left": ($(window).width()-$(".headbar img").width())/2});
 	$(".game_area, .toolbar_right, .vertbar").css({"height": $(window).height() - $(".headbar").height() - $(".horibar").height()});
 	$(".timebar").css({"position": "absolute", "top": ($(".game_area").height()*0.1+$(".headbar").height()) + $(".horibar").height(), "left": ($(".game_area").width()-$(".toolbar_right").width()-$(".timebar").width())*0.5+"px", "height": "20px"});
 	$(".players").css({"position": "absolute", "bottom": 0, "height": "200px", "left": "100px", "right": $(".toolbar_right").width()+$(".vertbar").width()+100});
-	$(".helpbg").css({"left": ($(window).width()-$(".helpbg").width())/2, "top": ($(window).height()-$(".helpbg").height())/2});
+	$(".helpbg").css({"left": ($(window).width()-785)/2, "top": ($(window).height()-650)/2});
 	$(".toolalert").css({"left": ($(window).width()-$(".toolalert").width())/2, "top": ($(window).height()-$(".toolalert").height())/2});
 	draw_result();
 	draw_options();

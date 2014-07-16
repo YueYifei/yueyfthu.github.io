@@ -15,7 +15,7 @@
 					}
 				}
 				setSuslik();
-				alert(suslik);
+				//alert(suslik);
 				//绘制地图
 				appendBlocks(hori, vert, map);
 				draw(hori,vert, map);
@@ -26,6 +26,25 @@
 			}
 			if(mode == 2){
 				//
+				s_lock++;
+				hori = data.hori-0;
+				vert = data.vert-0;
+				map = new Array();
+				for(var i = 0; i < vert; i++){
+					map[i] = new Array();
+					for(var j = 0; j < hori; j++) {
+						map[i][j] = (data.map[i*hori + j] - 0);//number类型的各位置信息
+					}
+				}
+				setSuslik();
+				//alert(suslik);
+				//绘制地图
+				appendBlocks(hori, vert, map);
+				draw(hori,vert, map);
+				$(window).resize(function() {
+					draw(hori,vert, map);
+				});
+				two_player_start();
 			}
 		}
 	}
@@ -84,6 +103,8 @@ $(document).ready(function(){
 				$(".options").css("display", "none");
 				//websocket
 				//socket.emit('mode', "3");
+				alert("不会在github上配置服务器 QAQ\n请期待展示环节(*^__^*) ……");
+				$(".options").slideDown(1000);
 				s_lock++;
 			}
 		});
@@ -134,6 +155,10 @@ function one_player_start(){
 				appendBlocks(hori, vert, map);
 				draw(hori, vert, map);
 				resetTimer();
+				resetTool();
+				if($(".map").children().length != 0){
+					$(".map").children().remove();
+				}
 				$(".welcome").slideDown(350);
 			});
 		}
@@ -270,19 +295,67 @@ function two_player_start(){
 				$(".winlose").css("display", "none");
 				appendBlocks(hori, vert, map);
 				draw(hori, vert, map);
+				resetTool();
 				s_lock = -1;
 				$(".options div:eq(1)").click();
 			});
 			$(".winlose div:eq(1)").click(function(){//返回菜单
 				$(".winlose").css("display", "none");
 				debugger;
-				setMap();//重设地图
 				appendBlocks(hori, vert, map);
 				draw(hori, vert, map);
+				resetTool();
+				if($(".map").children().length != 0){
+					$(".map").children().remove();
+				}
 				$(".welcome").slideDown(350);
 			});
 		}
 		else{//未找到地鼠
+
+			//判断道具
+			if(map[click_vert][click_hori] == 2){
+				map[click_vert][click_hori] = 1;
+				if(tool2){
+					//修改右侧框数字
+					tool2++;
+					$(".tool_num:eq(0)")[0].innerText = tool2;
+				}
+				else{
+					//提示得到道具二
+					tool2++;
+					$(".toolbar_right img:eq(0)").css("opacity", "1");
+					$(".tool_num:eq(0)")[0].innerText = tool2;
+
+					$(".toolalert").attr("src", "images/gettool2.jpg");
+					$(".toolalert").fadeIn(500, function(){
+						$(".toolalert").click(function(){
+							$(".toolalert").fadeOut(500);
+						})
+					})
+				}
+			}
+			if(map[click_vert][click_hori] == 3){
+				map[click_vert][click_hori] = 1;
+				if(tool3){
+					//修改右侧框数字
+					tool3++;
+					$(".tool_num:eq(1)")[0].innerText = tool3;
+				}
+				else{
+					//提示得到道具3
+					tool3++;
+					$(".toolbar_right img:eq(1)").css("opacity", "1");
+					$(".tool_num:eq(1)")[0].innerText = tool3;
+
+					$(".toolalert").attr("src", "images/gettool3.jpg");
+					$(".toolalert").fadeIn(500, function(){
+						$(".toolalert").click(function(){
+							$(".toolalert").fadeOut(500);
+						})
+					})
+				}
+			}
 
 			/****************特效：被点击的草皮翻开，显示数字****************/
 			var num_neighbor = near(click_vert, click_hori);//由周围地鼠的个数
@@ -306,6 +379,43 @@ function two_player_start(){
 
 			//地鼠移动一步
 			getSuslik(click_vert,click_hori, suslik);
+		}
+		
+	})
+	//道具使用事件
+	$(".toolbar_right img:eq(0)").click(function(){
+		//使用道具2
+		if(tool2 > 0){
+			tool2--;
+			$(".tool_num:eq(0)")[0].innerText = tool2;
+			if(tool2 == 0){				
+				$(".toolbar_right img:eq(0)").css("opacity", "0.7");
+			}
+
+			//使用效果：将不含地鼠的某一行变成石头
+			while(1){
+				var line = getRandom(vert);
+				if(suslik[0] != line){
+					break;
+				}
+			}
+			for(var i = 0; i < hori; i++){
+				$("#"+line+i).attr("class", "grass_stone stone");
+				$("#"+line+i+" img").attr("src", "images/stone.png");
+			}
+		}
+	})
+	$(".toolbar_right img:eq(1)").click(function(){
+		//使用道具3
+		if(tool3 > 0){
+			tool3--;
+			$(".tool_num:eq(1)")[0].innerText = tool3;
+			if(tool3 == 0){				
+				$(".toolbar_right img:eq(1)").css("opacity", "0.7");
+			}
+
+			//使用效果: 显示地鼠此时所在行
+			flick();
 		}
 	})
 }
@@ -351,6 +461,9 @@ function timeup(){
 		appendBlocks(hori, vert, map);
 		draw(hori, vert, map);
 		resetTimer();
+		if($(".map").children().length != 0){
+			$(".map").children().remove();
+		}
 		$(".welcome").slideDown(350);
 	});
 
