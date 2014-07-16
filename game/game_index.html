@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Angry Suslik</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<!--
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+-->
+<audio src="1.mp3" id="audio1" hidden="true" autoplay="true" loop="true"></audio> 
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/style.js" type="text/javascript"></script>
+<script src="js/game.js" type="text/javascript"></script>
+<!--
+<script src="node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+-->
+<script>//全局变量
+
+	$(document).on('click', '.grass', function(){
+		if(curPlayer == playerId){
+			alert(curPlayer);
+			//轮到自己选点
+			var click_hori = this.id.split("")[1] - 0;//水平坐标
+			var click_vert = this.id.split("")[0] - 0;//竖直坐标
+
+			if(suslik[0] == click_vert && suslik[1] == click_hori){
+				//websocket
+				//socket.emit("end",{"room" : room, "playerId": playerId});
+				//显示胜利
+				$("#"+(click_vert+"")+(click_hori+"")+" img").attr("src", "images/suslik.png");
+				//显示成功界面
+				$(".winlosebg").attr({"src": 'images/win.png'});
+				$(".winlose").slideDown(1000);
+				$(".winlose div:eq(0)").click(function(){//再来一局
+					$(".winlose").css("display", "none");
+					appendBlocks(hori, vert, map);
+					draw(hori, vert, map);
+					$(".options div:eq(2)").click();
+				});
+				$(".winlose div:eq(1)").click(function(){//返回菜单
+					$(".winlose").css("display", "none");
+					appendBlocks(hori, vert, map);
+					draw(hori, vert, map);
+					$(".welcome").slideDown(350);
+				});
+			}
+			else{
+				/****************特效：被点击的草皮翻开，显示数字****************/
+				var num_neighbor = near(click_vert, click_hori);//由周围地鼠的个数
+
+				$("#"+(click_vert+"")+(click_hori+"")+" img").attr("src", "images/soil"+(num_neighbor+"")+".png");
+				//变土为石             !!!!通知服务器端需要改地图
+				map[click_vert][click_hori] = 0;
+				$("#"+(click_vert+"")+(click_hori+"")).attr("class", "grass_stone stone");
+				setTimeout(function(){
+					$("#"+(click_vert+"")+(click_hori+"")+" img").attr("src", "images/stone.png");
+				//	alert("现在由"+player+"号玩家选点")
+				}, 2000);
+
+				/********************特效部分结束******************/
+				getSuslik(click_vert,click_hori, suslik);
+				//socket
+				//socket.emit("click", {"room" : room, "move": dire, "clickX" : click_hori, "clickY" : click_vert});
+				curPlayer = change_player();
+				//显示轮到对方选点
+				if(curPlayer == 1){
+					$(".players img:eq(3)").hide();
+					$(".players img:eq(2)").fadeIn(500);//player1,player2,1号选点
+				}
+				else{
+					$(".players img:eq(3)").hide();
+					$(".players img:eq(2)").fadeIn(500);//player1,player2,1号选点
+				}
+			}
+		}
+	});
+	/********************从服务器获取信息*************************** /
+
+	//mode = 1;//1/2/3
+
+	socket = io.connect('http://localhost:8888');
+
+	socket.on('map',function(data){
+		//a json contain a map
+		//data: {"hori": "3", "vert" : "3", "map" : "111111111","mode":}
+		hori = data.hori - 0;
+		vert = data.vert - 0;
+		map = new Array();
+		suslik[0] = data.suslikY - 0;
+		suslik[1] = data.suslikX - 0;
+		for(var i = 0; i < vert; i++){
+			map[i] = new Array();
+			for(var j = 0; j < hori; j++) {
+				map[i].push(data.map[i*hori + j] - 0);//number类型的各位置信息
+			}
+		}
+
+		//单人游戏
+		if(s_lock < 0){
+			if(mode == 1){
+				s_lock++;
+				setSuslik();
+				alert(suslik);
+				//绘制地图
+				appendBlocks(hori, vert, map);
+				draw(hori,vert, map);
+				$(window).resize(function() {
+					draw(hori,vert, map);
+				});
+				one_player_start();
+			}
+			if(mode == 2){
+				s_lock++;
+				setSuslik();
+				alert(suslik);
+				//绘制地图
+				appendBlocks(hori, vert, map);
+				draw(hori,vert, map);
+				$(window).resize(function() {
+					draw(hori,vert, map);
+				});
+				two_player_start();
+			}
+		}
+		if(mode == 3){
+			alert(suslik);
+			//绘制地图
+			appendBlocks(hori, vert, map);
+			draw(hori,vert, map);
+			$(window).resize(function() {
+				draw(hori,vert, map);
+			});
+		}
+
+	});
+
+	socket.on('subscribe',function(data){
+		//contain two elements: the number of room and the id of your player
+		//data: "room" : "0, "playerId" : "0"}
+		//alert(data.room);
+		//alert(data.playerId);// 0 自己
+		room = data.room-0;
+		playerId = data.playerId-0;
+	});
+	socket.on('begin',function(data){
+		//the game is begin, you can start the game
+		//data: {"curPlayer" : "0"} who's turn? 
+		//alert('begin');
+		curPlayer = data.curPlayer-0;
+		$(".players img:eq(0), .players img:eq(1)").fadeIn(500);//player1,player2
+		if(curPlayer == 0){
+			$(".players img:eq(3)").hide();
+			$(".players img:eq(2)").fadeIn(500);//player1,player2,1号选点
+		}
+		else{
+			$(".players img:eq(3)").hide();
+			$(".players img:eq(2)").fadeIn(500);//player1,player2,1号选点
+		}
+		//收到begin信息后游戏开始
+	});
+
+
+	socket.on('click',function(data){
+		//接受到另一玩家的click事件
+		click_vert = data.clickY - 0;
+		click_hori = data.clickX - 0;
+		//显示轮到自己方选点
+		if(playerId == 0){
+			$(".players img:eq(3)").hide();
+			$(".players img:eq(2)").fadeIn(500);//player1,player2,1号选点
+		}
+		else{
+			$(".players img:eq(3)").hide();
+			$(".players img:eq(2)").fadeIn(500);//player1,player2,1号选点
+		}
+		/****************特效：被点击的草皮翻开，显示数字**************** /
+		var num_neighbor = near(click_vert, click_hori);//由周围地鼠的个数
+
+		$("#"+(click_vert+"")+(click_hori+"")+" img").attr("src", "images/soil"+(num_neighbor+"")+".png");
+		//变土为石             !!!!通知服务器端需要改地图
+		map[click_vert][click_hori] = 0;
+		$("#"+(click_vert+"")+(click_hori+"")).attr("class", "grass_stone stone");
+		setTimeout(function(){
+			$("#"+(click_vert+"")+(click_hori+"")+" img").attr("src", "images/stone.png");
+		//	alert("现在由"+player+"号玩家选点")
+		}, 2000);
+		curPlayer = playerId;
+	});
+
+	socket.on('end',function(data){
+		//接受对方获胜信息
+		click_vert = data.clickY - 0;
+		click_hori = data.clickX - 0;
+		//显示地鼠
+		$("#"+(click_vert+"")+(click_hori+"")+" img").attr("src", "images/suslik.png");
+		//显示失败界面
+		$(".winlosebg").attr({"src": 'images/lose.png'});
+		$(".winlose").slideDown(1000);
+		$(".winlose div:eq(0)").click(function(){//再来一局
+			$(".winlose").css("display", "none");
+			appendBlocks(hori, vert, map);
+			draw(hori, vert, map);
+			debugger;
+			$(".options div:eq(2)").click();
+		});
+		$(".winlose div:eq(1)").click(function(){//返回菜单
+			$(".winlose").css("display", "none");
+			appendBlocks(hori, vert, map);
+			draw(hori, vert, map);
+			debugger;
+			$(".welcome").slideDown(350);
+		});
+		
+	});
+	/**********************从服务器获取信息结束***********************/
+
+	//以下来自json
+
+	hori = 7, vert = 3, mode = -1;
+	dire = 0;//0: 不动  1:上 2：下  3：左  4：右 
+	var map = new Array();
+	suslik = new Array();
+	time = 30;//时间限制(s)
+	//以下在联网模式使用
+	room = 0, playerId = 0, curPlayer = -1;
+	tool2 = 0;
+	tool3 = 0;
+	
+
+	/*//本地模拟
+	setMap();
+	//设置地图
+	function setMap(){
+		k = 0;
+		for(var i = 0; i < vert; i++){
+			map[i] = new Array();
+			for(var j = 0; j < hori; j++){
+				map[i][j] = 1;
+				k++;
+			}
+		}
+	}*/
+
+
+	function getRandom(n){//返回[0, n)区间内的随机整数
+		if(n >= 0){
+			var res = Math.floor(Math.random()*(n));
+			return res;
+		}
+	}
+</script>
+</head>
+<body>
+	<div class = "welcome">
+		<img class = "welcomebg" src = "images/welcome.jpg"/>
+		<div class = "play">
+		</div>
+		<div class = "help">
+		</div>
+	</div>
+	<img class = "helpbg" src = "images/help.png"/>
+	<img class = "toolalert" />
+	<div class = "options">
+		<div class = "one_player">
+		</div>
+		<div class = "two_players">
+		</div>
+		<div class = "network">
+		</div>
+	</div>
+	<div class = "winlose">
+		<img class = "winlosebg" src = "images/result.png"/>
+		<div class = "play_again">
+		</div>
+		<div class = "return">
+		</div>
+	</div>
+
+	<div class = "headbar">
+		<img src = "images/headbar.png"/>
+	</div>
+	<div class = "horibar">
+	</div>
+	<div class = "game_area">
+		<div class = "toolbar_right">
+			<div>
+				<img src = "images/tool2.jpg" title = "将不含地鼠的某一行变成石头"/>
+				<span class = "tool_num">0</span>
+			</div>
+			<div>
+				<img src = "images/tool3.jpg" title ="显示地鼠此时所在行"/>
+				<span class = "tool_num">0</span>
+			</div>
+		</div>
+		<div class = "vertbar">
+		</div>
+		<div class = "map">
+		</div>
+		<div class = "timebar">
+		</div>
+		<div class = "players">
+			<img style = "float: right" src = "images/player1.png"/>
+			<img style = "float: left" src = "images/player2.png"/>
+			<img style = "float: right" src = "images/arrow1.png"/>
+			<img style = "float: left" src = "images/arrow2.png"/>
+		</div>
+		<img class = "game_bott" src = "images/game_bott.png"/>
+		<img class = "game_top" src = "images/game_top.png"/>
+	</div>
+
+</body>
+</html>

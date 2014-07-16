@@ -1,0 +1,133 @@
+body{
+	font-family: Microsoft YaHei;
+	margin: 0;
+}
+body div img{
+margin: 0;
+display: block;
+}
+.welcome, .welcomebg{
+	position: absolute;
+	z-index: 100;
+	left: 0;
+	top: 0;
+}
+.headbar{
+	height: 62px;
+	text-align: center;
+	background-image: url("images/headbarbg.png");
+}
+.headbar img{
+	width: 833px;
+}
+.horibar{
+	height: 10px;
+	background-image: url("images/horibar.png");
+}
+.vertbar{
+	float: right;
+	width: 10px;
+	background-image: url("images/vertbar.png");
+}
+.game_area{
+	background-image: url("images/gamebg.jpg");
+	margin: auto;
+	/*cursor: url('C:/demo/images/shovel.ico'), auto;*/
+}
+.toolbar_right{
+	background-image: url("images/bricks.jpg");
+	float: right;
+	width: 20%;
+}
+.timebar{
+	background-image: url("images/timebar.png");
+	width: 400px;
+	display: none;
+}
+.winlose, .options{
+	z-index: 50;
+	position: absolute;
+	display: none;
+}
+.play_again, .return{
+	position: absolute;
+	height: 100px;
+	width: 300px;
+	bottom: 14%;
+}
+.play_again{
+	background-image: url("images/replay.png");
+	cursor: pointer;
+}
+.return{
+	background-image: url("images/return.png");
+	cursor: pointer;
+}
+.one_player, .two_players, .network{
+	position: absolute;
+	height: 100px;
+	width: 300px;
+	cursor:pointer;
+}
+.one_player{
+	background-image: url("images/1player.png");
+	top: 100px;
+}
+.two_players{
+	background-image: url("images/2players.png");
+	top: 250px;
+}
+.network{
+	background-image: url("images/online.png");
+	top: 400px;
+}
+.players img{
+	display: none;
+}
+
+.play, .help{
+	position: absolute;
+	width: 200px;
+	height: 60px;
+	z-index: 101;
+	cursor: pointer;
+}
+.play{
+	left:28%;
+	top: 32%;
+}
+.help{
+	left:28%;
+	top: 53%;
+}
+.game_bott{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+.game_top{
+	float: left;
+	top: 0;
+	left: 0;
+}
+.helpbg, .toolalert{
+	position: absolute;
+	display: none;
+	z-index: 200;
+}
+.toolbar_right span{
+	position: absolute;
+	right: 0;
+	font-size: 50px;
+	font-family: Microsoft YaHei;
+	text-align: center;
+	color: white;
+	opacity: 0.7
+}
+.toolbar_right img{
+	opacity: 0.5;
+}
+.toolalert{
+	width: 431px;
+	height: 212px;
+}
