@@ -1,0 +1,40 @@
+body{
+	padding: 0;
+	margin: 0;
+	background-image: url(img/bg.png);
+}
+.sidebar{
+	width: 250px;
+	background-color: rgb(207,191,140);
+	float: left;
+	text-align: center;
+	-webkit-box-shadow: #666 0px 0px 10px;
+	-moz-box-shadow: #666 0px 0px 10px;
+	box-shadow: #666 0px 0px 20px;
+}
+.main{
+	float: left;
+}
+#map_area{
+	height: 485px;
+	width: 722px;
+	background: rgb(35,31,32);
+}
+.head{
+	width: 150px;
+	height: 150px;
+	background-image: url(img/head.png);
+	position: absolute;
+	left: 50px;
+	top: 80px;
+}
+.button{
+	width: 100px;
+	height: 25px;
+	margin: 10px;
+	background-color: rgb(226,211,172);
+	font-family: Microsoft YaHei;
+	cursor: hand;
+	position: absolute;
+	left: 65px;
+}

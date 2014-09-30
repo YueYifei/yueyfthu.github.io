@@ -1,0 +1,32 @@
+<html>
+<head>
+
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src = "js/cellular_automata.js"></script>
+<script type="text/javascript" src = "js/style.js"></script>
+<script type="text/javascript">
+	var width = 60;
+	var height = 40;
+	initMap();
+</script>
+</head>
+<body>
+	<div class = "sidebar">
+	<div class = "head">
+	</div>
+	<div class = "button" onclick = "startGame()" style = "top: 300px">
+	START
+	</div>
+	<div class = "button" onclick = "endGame()" style = "top: 350px">
+	END
+	</div>
+	</div>
+	<div class = "main">
+		<div id = "head">
+		</div>
+		<div id = "map_area">
+		</div>
+	</div>
+</body>
+</html>
