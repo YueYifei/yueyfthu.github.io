@@ -58,9 +58,15 @@ html,body,div,p,ul,li,img {
 .remark_head, .remark_end{
     padding: 10px;
 }
-.controlBar, .controlBar span{
+.controlBar{
     float: right;
     margin-right: 10px;
+}
+
+.controlBar span{
+    float: right;
+    margin-right: 10px;
+    cursor: pointer;
 }
 .controlBar span:nth-child(1){
     margin-right: 0;
