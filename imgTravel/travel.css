@@ -61,6 +61,7 @@ html,body,div,p,ul,li,img {
 .controlBar, .controlBar span{
     float: right;
     margin-right: 10px;
+    cursor: pointer;
 }
 .controlBar span:nth-child(1){
     margin-right: 0;
@@ -93,9 +94,11 @@ html,body,div,p,ul,li,img {
     height: auto;
     float: right;
     margin-right: 15px;
+    cursor: pointer;
 }
 .username, .comment, .agrees{
     color: #85c7ff;
+    cursor: pointer;
 }
 
 ul,li{
